@@ -55,11 +55,6 @@ print(f"Precision: {round(precision, 4)}")
 print(f"Recall: {round(recall, 4)}")
 print(f"F1 Score: {round(f1, 4)}")
 
-
-# Print detailed classification report
-print("\nClassification Report:")
-print(classification_report(testing_dataset.range, predictions))
-
-# Print confusion matrix
+# Print confusion matrix to show true/false positives/negatives
 print("\nConfusion Matrix:")
 print(confusion_matrix(testing_dataset.range, predictions))
