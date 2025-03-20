@@ -4,6 +4,8 @@ from abc import ABC, abstractmethod
 from typing import final
 from .data import Dataset
 from .data import NORMAL, NOT_NORMAL
+from sklearn.base import ClassifierMixin
+
 
 class Model(ABC):
 	"""Class to represent a learning model.
@@ -92,3 +94,18 @@ class DummyModel(Model):
 		# Run some predict functions on the testing data.
 		# Return a list of [NORMAL, NORMAL, NOT_NORMAL, etc...]
 		return [NORMAL] * len(testing_data._raw_data)
+
+
+class SKLearnModel(Model):
+	def __init__(self, name, classifier: ClassifierMixin):
+		super().__init__(name)
+		self._data = None
+		self._classifier = classifier
+	
+
+	def _train(self, training_data):
+		self._model = self._classifier.fit(training_data.normalized_domain, training_data.range)
+	
+
+	def _predict(self, testing_data) -> list:
+		return list(map(lambda x: int(x), list(self._model.predict(testing_data.normalized_domain))))
