@@ -3,6 +3,7 @@
 import argparse
 from . import data
 from .model import *
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, classification_report, confusion_matrix
 
 from sklearn.linear_model import LogisticRegression
 
@@ -41,3 +42,19 @@ if not args.omit_predictions:
 	print("Predictions, 0-indexed:")
 	for i in range(0, len(predictions)):
 		print("Line " + str(i) + " - " + ("normal" if predictions[i] == 1 else "NOT normal"))
+
+accuracy = accuracy_score(testing_dataset.range, predictions)
+precision = precision_score(testing_dataset.range, predictions)
+recall = recall_score(testing_dataset.range, predictions)
+f1 = f1_score(testing_dataset.range, predictions)
+
+# Print metrics
+print(f"\n{model.name} Metrics:")
+print(f"Accuracy: {round(accuracy, 4)}")
+print(f"Precision: {round(precision, 4)}")
+print(f"Recall: {round(recall, 4)}")
+print(f"F1 Score: {round(f1, 4)}")
+
+# Print confusion matrix to show true/false positives/negatives
+print("\nConfusion Matrix:")
+print(confusion_matrix(testing_dataset.range, predictions))
