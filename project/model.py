@@ -99,7 +99,7 @@ class DummyModel(Model):
 class SKLearnModel(Model):
 	def __init__(self, name, classifier: ClassifierMixin):
 		super().__init__(name)
-		self._data = None
+		self._model = None
 		self._classifier = classifier
 	
 
