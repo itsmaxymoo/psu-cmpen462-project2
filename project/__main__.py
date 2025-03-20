@@ -6,11 +6,15 @@ from .model import *
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, classification_report, confusion_matrix
 
 from sklearn.linear_model import LogisticRegression
+from sklearn.svm import SVC
+from sklearn.ensemble import RandomForestClassifier
 
 
 # --- Define models
 models = {
-	"logistic_regression": SKLearnModel("Logistic Regression", LogisticRegression())
+	"logistic_regression": SKLearnModel("Logistic Regression", LogisticRegression()),
+	"svm": SKLearnModel("Support Vector Machine", SVC()),
+	"random_forest": SKLearnModel("Random Forest", RandomForestClassifier())
 }
 
 
