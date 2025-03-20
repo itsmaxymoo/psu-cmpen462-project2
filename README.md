@@ -17,3 +17,10 @@ Python 3.13 is not supported by tensorflow!
 ## To run the project:
 
 From the project root: `python -m project <train.csv> <test.csv>`
+
+## TODO
+
+* TF Shape
+* TF perf. plot
+* variables and placeholders?
+* Ensure all guidelines are followed

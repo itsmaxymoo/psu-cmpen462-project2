@@ -5,6 +5,8 @@ from typing import final
 from .data import Dataset
 from .data import NORMAL, NOT_NORMAL
 from sklearn.base import ClassifierMixin
+import tensorflow as tf
+import keras
 
 
 class Model(ABC):
@@ -109,3 +111,34 @@ class SKLearnModel(Model):
 
 	def _predict(self, testing_data) -> list:
 		return list(map(lambda x: int(x), list(self._model.predict(testing_data.normalized_domain))))
+
+
+class TensorFlowModel(Model):
+	def __init__(self):
+		super().__init__("Tensor Flow")
+
+		# Configure model structure
+		self._model: keras.Sequential = keras.Sequential([
+			keras.layers.Dense(16, activation="relu"),
+			keras.layers.Dense(128, activation="relu"),
+			keras.layers.Dense(128, activation="relu"),
+			keras.layers.Dense(1, activation="sigmoid")
+		])
+
+		# Configure model parameters
+		self._model.compile(
+			loss=keras.losses.BinaryCrossentropy(),
+			optimizer=keras.optimizers.Adam(learning_rate=0.1),
+			metrics = [
+				keras.metrics.BinaryAccuracy(name="accuracy")
+			]
+		)
+
+
+	def _train(self, training_data):
+		self._model.fit(training_data.normalized_domain, training_data.range, epochs=16, batch_size=128)
+
+
+	def _predict(self, testing_data):
+		pred = self._model.predict(testing_data.normalized_domain)
+		return list(map(lambda x: NORMAL if x[0] > 0.5 else NOT_NORMAL, pred))
