@@ -91,4 +91,4 @@ class DummyModel(Model):
 	def _predict(self, testing_data):
 		# Run some predict functions on the testing data.
 		# Return a list of [NORMAL, NORMAL, NOT_NORMAL, etc...]
-		return [NORMAL] * len(testing_data.raw_data)
+		return [NORMAL] * len(testing_data._raw_data)

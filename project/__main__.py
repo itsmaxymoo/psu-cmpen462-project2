@@ -15,7 +15,7 @@ args = parser.parse_args()
 
 # --- load datasets
 training_dataset = data.Dataset(args.train)
-testing_dataset = data.Dataset(args.test)
+testing_dataset = data.Dataset(args.test, training_dataset)
 
 
 # --- Training
