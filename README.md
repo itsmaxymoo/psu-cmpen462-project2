@@ -1,4 +1,4 @@
-# psu-cmpen462-project2
+# Secret Project (Google Protection)
 
 ## Prerequisites
 
