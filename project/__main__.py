@@ -14,7 +14,8 @@ from sklearn.ensemble import RandomForestClassifier
 models = {
 	"logistic_regression": SKLearnModel("Logistic Regression", LogisticRegression()),
 	"svm": SKLearnModel("Support Vector Machine", SVC()),
-	"random_forest": SKLearnModel("Random Forest", RandomForestClassifier())
+	"random_forest": SKLearnModel("Random Forest", RandomForestClassifier()),
+	"tensorflow": TensorFlowModel()
 }
 
 
