@@ -8,7 +8,7 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 from sklearn.linear_model import LogisticRegression
 from sklearn.svm import SVC
 from sklearn.ensemble import RandomForestClassifier
-
+import matplotlib.pyplot as plt
 
 # --- Define models
 models = {
@@ -34,13 +34,41 @@ args = parser.parse_args()
 training_dataset = data.Dataset(args.train)
 testing_dataset = data.Dataset(args.test, training_dataset)
 
-
+# Define function to plot training performance
+def plot_training_history(history):
+    # Plot accuracy
+    plt.figure(figsize=(12, 5))
+    
+    plt.subplot(1, 2, 1)
+    plt.plot(history.history['accuracy'])
+    plt.plot(history.history['val_accuracy'])
+    plt.title('Model Accuracy')
+    plt.ylabel('Accuracy')
+    plt.xlabel('Epoch')
+    plt.legend(['Train', 'Validation'], loc='upper left')
+    
+    # Plot loss
+    plt.subplot(1, 2, 2)
+    plt.plot(history.history['loss'])
+    plt.plot(history.history['val_loss'])
+    plt.title('Model Loss')
+    plt.ylabel('Loss')
+    plt.xlabel('Epoch')
+    plt.legend(['Train', 'Validation'], loc='upper left')
+    
+    plt.tight_layout()
+    plt.savefig('plot.png')
+    print("\nTraining plots saved as 'plot.png'.")
+	
 # --- Training
 # In the future, we will have support for multiple models.
 model: Model = models[args.model]
 model.train(training_dataset)
 predictions = model.predict(testing_dataset)
 
+# Plot training history if the model is TensorFlow and has a history attribute
+if args.model == "tensorflow" and hasattr(model, "history"):
+    plot_training_history(model.history)
 # --- Analysis and output
 print("Analysis and predictions for model: " + model.name)
 if not args.omit_predictions:
