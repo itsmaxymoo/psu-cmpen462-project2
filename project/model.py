@@ -133,10 +133,12 @@ class TensorFlowModel(Model):
 				keras.metrics.BinaryAccuracy(name="accuracy")
 			]
 		)
+		# Set history to None, will be set during training
+		self.history = None
 
 
 	def _train(self, training_data):
-		self._model.fit(training_data.normalized_domain, training_data.range, epochs=16, batch_size=128)
+		self.history = self._model.fit(training_data.normalized_domain, training_data.range, epochs=16, batch_size=128)
 
 
 	def _predict(self, testing_data):
