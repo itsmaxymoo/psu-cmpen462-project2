@@ -5,8 +5,6 @@ from typing import final
 from .data import Dataset
 from .data import NORMAL, NOT_NORMAL
 from sklearn.base import ClassifierMixin
-import tensorflow as tf
-import keras
 
 
 class Model(ABC):
@@ -114,23 +112,26 @@ class SKLearnModel(Model):
 
 
 class TensorFlowModel(Model):
+	import tensorflow as tf
+	import keras
+
 	def __init__(self):
 		super().__init__("Tensor Flow")
 
 		# Configure model structure
-		self._model: keras.Sequential = keras.Sequential([
-			keras.layers.Dense(16, activation="relu"),
-			keras.layers.Dense(128, activation="relu"),
-			keras.layers.Dense(128, activation="relu"),
-			keras.layers.Dense(1, activation="sigmoid")
+		self._model: self.keras.Sequential = self.keras.Sequential([
+			self.keras.layers.Dense(16, activation="relu"),
+			self.keras.layers.Dense(128, activation="relu"),
+			self.keras.layers.Dense(128, activation="relu"),
+			self.keras.layers.Dense(1, activation="sigmoid")
 		])
 
 		# Configure model parameters
 		self._model.compile(
-			loss=keras.losses.BinaryCrossentropy(),
-			optimizer=keras.optimizers.Adam(learning_rate=0.1),
+			loss=self.keras.losses.BinaryCrossentropy(),
+			optimizer=self.keras.optimizers.Adam(learning_rate=0.1),
 			metrics = [
-				keras.metrics.BinaryAccuracy(name="accuracy")
+				self.keras.metrics.BinaryAccuracy(name="accuracy")
 			]
 		)
 		# Set history to None, will be set during training

@@ -41,7 +41,6 @@ def plot_training_history(history):
     
     plt.subplot(1, 2, 1)
     plt.plot(history.history['accuracy'])
-    plt.plot(history.history['val_accuracy'])
     plt.title('Model Accuracy')
     plt.ylabel('Accuracy')
     plt.xlabel('Epoch')
@@ -50,7 +49,6 @@ def plot_training_history(history):
     # Plot loss
     plt.subplot(1, 2, 2)
     plt.plot(history.history['loss'])
-    plt.plot(history.history['val_loss'])
     plt.title('Model Loss')
     plt.ylabel('Loss')
     plt.xlabel('Epoch')
@@ -59,6 +57,7 @@ def plot_training_history(history):
     plt.tight_layout()
     plt.savefig('plot.png')
     print("\nTraining plots saved as 'plot.png'.")
+    plt.show()
 	
 # --- Training
 # In the future, we will have support for multiple models.
@@ -66,9 +65,6 @@ model: Model = models[args.model]
 model.train(training_dataset)
 predictions = model.predict(testing_dataset)
 
-# Plot training history if the model is TensorFlow and has a history attribute
-if args.model == "tensorflow" and hasattr(model, "history"):
-    plot_training_history(model.history)
 # --- Analysis and output
 print("Analysis and predictions for model: " + model.name)
 if not args.omit_predictions:
@@ -91,3 +87,7 @@ print(f"F1 Score: {round(f1, 4)}")
 # Print confusion matrix to show true/false positives/negatives
 print("\nConfusion Matrix:")
 print(confusion_matrix(testing_dataset.range, predictions))
+
+# Plot training history if the model is TensorFlow, plot data
+if args.model == "tensorflow" and hasattr(model, "history"):
+    plot_training_history(model.history)
