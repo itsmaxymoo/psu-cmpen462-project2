@@ -120,7 +120,7 @@ class TensorFlowModel(Model):
 
 		# Configure model structure
 		self._model: self.keras.Sequential = self.keras.Sequential([
-			self.keras.layers.Dense(16, activation="relu"),
+			self.keras.layers.Dense(16, activation="relu", input_shape=(45,)), # trial and error
 			self.keras.layers.Dense(128, activation="relu"),
 			self.keras.layers.Dense(128, activation="relu"),
 			self.keras.layers.Dense(1, activation="sigmoid")

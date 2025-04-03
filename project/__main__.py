@@ -3,7 +3,7 @@
 import argparse
 from . import data
 from .model import *
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, classification_report, confusion_matrix
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix
 
 from sklearn.linear_model import LogisticRegression
 from sklearn.svm import SVC
